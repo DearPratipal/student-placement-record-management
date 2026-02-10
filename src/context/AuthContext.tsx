@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { User, UserRole } from '../types';
-import { apiService } from '../services/mockData';
+import { loginApi } from '../services/authApi';
+// import { apiService } from '../services/apiService';
 
 interface AuthContextType {
   user: User | null;
@@ -23,7 +24,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
     setIsLoading(false);
   }, []);
-
+  /*
   const login = async (email: string, _password: string): Promise<boolean> => {
     // In a real app, password would be hashed and sent to backend
     const foundUser = await apiService.login(email);
@@ -34,10 +35,26 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
     return false;
   };
+  */
+
+  const login = async (email: string, password: string): Promise<boolean> => {
+    try {
+      const data = await loginApi(email, password);
+
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('mmdu_user', JSON.stringify(data.user));
+
+      setUser(data.user);
+      return true;
+    } catch (error) {
+      return false;
+    }
+  };
 
   const logout = () => {
     setUser(null);
     localStorage.removeItem('mmdu_user');
+    localStorage.removeItem('token');
   };
 
   return (

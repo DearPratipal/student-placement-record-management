@@ -1,26 +1,26 @@
 import React, { useEffect, useState } from 'react';
-import { 
-  Users, 
-  Briefcase, 
-  CheckCircle, 
-  AlertTriangle, 
+import {
+  Users,
+  Briefcase,
+  CheckCircle,
+  AlertTriangle,
   TrendingUp,
   FileText
 } from 'lucide-react';
-import { 
-  BarChart, 
-  Bar, 
-  XAxis, 
-  YAxis, 
-  CartesianGrid, 
-  Tooltip, 
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
   ResponsiveContainer,
   PieChart,
   Pie,
   Cell,
   Legend
 } from 'recharts';
-import { apiService } from '../services/mockData';
+import { apiService } from '../services/apiService';
 import { Student, Drive } from '../types';
 
 export const Dashboard: React.FC = () => {
@@ -52,10 +52,10 @@ export const Dashboard: React.FC = () => {
 
   // Chart Data
   const deptData = [
-    { name: 'CSE', placed: 120, total: 150 },
-    { name: 'ECE', placed: 85, total: 100 },
-    { name: 'ME', placed: 45, total: 80 },
-    { name: 'Biotech', placed: 30, total: 40 },
+    { name: 'BCA', placed: 120, total: 500 },
+    { name: 'MCA', placed: 85, total: 100 },
+    { name: 'B.Sc.', placed: 45, total: 300 },
+    { name: 'M.Sc', placed: 30, total: 80 },
   ];
 
   const pieData = [
@@ -74,31 +74,31 @@ export const Dashboard: React.FC = () => {
 
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <StatCard 
-          title="Total Students" 
-          value={totalStudents} 
-          icon={<Users className="text-blue-600" />} 
+        <StatCard
+          title="Total Students"
+          value={totalStudents}
+          icon={<Users className="text-blue-600" />}
           bg="bg-blue-50"
           border="border-blue-200"
         />
-        <StatCard 
-          title="Placement Rate" 
-          value={`${placementRate}%`} 
-          icon={<TrendingUp className="text-green-600" />} 
+        <StatCard
+          title="Placement Rate"
+          value={`${placementRate}%`}
+          icon={<TrendingUp className="text-green-600" />}
           bg="bg-green-50"
           border="border-green-200"
         />
-        <StatCard 
-          title="Active Drives" 
-          value={activeDrives} 
-          icon={<Briefcase className="text-purple-600" />} 
+        <StatCard
+          title="Active Drives"
+          value={activeDrives}
+          icon={<Briefcase className="text-purple-600" />}
           bg="bg-purple-50"
           border="border-purple-200"
         />
-        <StatCard 
-          title="At Risk (Inactive)" 
-          value={atRiskStudents} 
-          icon={<AlertTriangle className="text-red-600" />} 
+        <StatCard
+          title="At Risk (Inactive)"
+          value={atRiskStudents}
+          icon={<AlertTriangle className="text-red-600" />}
           bg="bg-red-50"
           border="border-red-200"
         />
@@ -115,7 +115,7 @@ export const Dashboard: React.FC = () => {
                 <CartesianGrid strokeDasharray="3 3" vertical={false} />
                 <XAxis dataKey="name" />
                 <YAxis />
-                <Tooltip 
+                <Tooltip
                   contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
                 />
                 <Legend />
@@ -128,9 +128,9 @@ export const Dashboard: React.FC = () => {
 
         {/* Pie Chart & Recent Activity */}
         <div className="space-y-8">
-           <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex flex-col items-center">
+          <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex flex-col items-center">
             <h3 className="text-lg font-semibold text-gray-800 mb-2 w-full text-left">Overall Status</h3>
-             <div className="h-48 w-full">
+            <div className="h-48 w-full">
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
                   <Pie
@@ -149,36 +149,36 @@ export const Dashboard: React.FC = () => {
                 </PieChart>
               </ResponsiveContainer>
             </div>
-           </div>
+          </div>
 
-           <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-              <div className="flex justify-between items-center mb-4">
-                <h3 className="text-lg font-semibold text-gray-800">Recent Drives</h3>
-                <button className="text-sm text-mmdu-red font-medium hover:underline">View All</button>
-              </div>
-              <div className="space-y-4">
-                {drives.slice(0, 3).map(drive => (
-                  <div key={drive.id} className="flex items-center justify-between p-3 hover:bg-gray-50 rounded-lg transition-colors border border-gray-100">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 font-bold">
-                        {drive.companyName.substring(0, 1)}
-                      </div>
-                      <div>
-                        <p className="font-medium text-gray-800">{drive.companyName}</p>
-                        <p className="text-xs text-gray-500">{drive.role}</p>
-                      </div>
+          <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-lg font-semibold text-gray-800">Recent Drives</h3>
+              <button className="text-sm text-mmdu-red font-medium hover:underline">View All</button>
+            </div>
+            <div className="space-y-4">
+              {drives.slice(0, 3).map(drive => (
+                <div key={drive.id} className="flex items-center justify-between p-3 hover:bg-gray-50 rounded-lg transition-colors border border-gray-100">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 font-bold">
+                      {drive.companyName.substring(0, 1)}
                     </div>
-                    <div className="text-right">
-                       <span className={`px-2 py-1 rounded text-xs font-medium 
-                         ${drive.status === 'UPCOMING' ? 'bg-blue-100 text-blue-700' : 
-                           drive.status === 'ONGOING' ? 'bg-amber-100 text-amber-700' : 'bg-green-100 text-green-700'}`}>
-                         {drive.status}
-                       </span>
+                    <div>
+                      <p className="font-medium text-gray-800">{drive.companyName}</p>
+                      <p className="text-xs text-gray-500">{drive.role}</p>
                     </div>
                   </div>
-                ))}
-              </div>
-           </div>
+                  <div className="text-right">
+                    <span className={`px-2 py-1 rounded text-xs font-medium 
+                         ${drive.status === 'UPCOMING' ? 'bg-blue-100 text-blue-700' :
+                        drive.status === 'ONGOING' ? 'bg-amber-100 text-amber-700' : 'bg-green-100 text-green-700'}`}>
+                      {drive.status}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </div>

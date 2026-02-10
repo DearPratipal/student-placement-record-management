@@ -1,11 +1,11 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { 
-  LayoutDashboard, 
-  Users, 
-  Briefcase, 
-  LogOut, 
+import {
+  LayoutDashboard,
+  Users,
+  Briefcase,
+  LogOut,
   UserCircle,
   Menu,
   X,
@@ -24,11 +24,10 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
   const NavItem = ({ to, icon: Icon, label }: { to: string; icon: any; label: string }) => (
     <Link
       to={to}
-      className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors duration-200 ${
-        isActive(to)
+      className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors duration-200 ${isActive(to)
           ? 'bg-mmdu-red text-white shadow-md'
           : 'text-gray-600 hover:bg-red-50 hover:text-mmdu-red'
-      }`}
+        }`}
     >
       <Icon size={20} />
       <span className="font-medium">{label}</span>
@@ -41,7 +40,7 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
       <header className="bg-white border-b border-gray-200 sticky top-0 z-20 h-16">
         <div className="flex items-center justify-between px-4 h-full">
           <div className="flex items-center gap-3">
-            <button 
+            <button
               onClick={() => setIsSidebarOpen(!isSidebarOpen)}
               className="p-2 hover:bg-gray-100 rounded-md lg:hidden"
             >
@@ -66,7 +65,7 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
 
       <div className="flex flex-1 overflow-hidden">
         {/* Sidebar */}
-        <aside 
+        <aside
           className={`
             fixed lg:static inset-y-0 left-0 z-10
             w-64 bg-white border-r border-gray-200 transform transition-transform duration-200 ease-in-out
@@ -96,7 +95,7 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
           <div className="max-w-7xl mx-auto min-h-[85vh]">
             {children}
           </div>
-          
+
           {/* Footer */}
           <footer className="mt-8 border-t border-gray-200 pt-6 pb-8 text-center text-gray-500 text-sm">
             <p className="font-medium text-gray-700">Maharishi Markandeshwar (Deemed to be University)</p>

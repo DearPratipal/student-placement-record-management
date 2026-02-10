@@ -11,6 +11,15 @@ export const Login: React.FC = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
 
+  /*
+  const handleLogin = async () => {
+    const user = await apiService.login(email);
+    if (user) {
+      login(user);
+    }
+  };
+  */
+ 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
@@ -35,9 +44,9 @@ export const Login: React.FC = () => {
       <div className="max-w-md w-full bg-white rounded-2xl shadow-xl overflow-hidden">
         <div className="bg-mmdu-red px-8 py-10 text-center">
           <div className="flex justify-center mb-4">
-             <div className="bg-white p-3 rounded-full shadow-lg">
-                <GraduationCap className="text-mmdu-red w-10 h-10" />
-             </div>
+            <div className="bg-white p-3 rounded-full shadow-lg">
+              <GraduationCap className="text-mmdu-red w-10 h-10" />
+            </div>
           </div>
           <h2 className="text-3xl font-bold text-white mb-2">MM(DU)</h2>
           <p className="text-red-100 font-medium">Placement Record Management System</p>
@@ -45,7 +54,7 @@ export const Login: React.FC = () => {
 
         <div className="p-8">
           <h3 className="text-xl font-semibold text-gray-800 mb-6 text-center">Secure Login</h3>
-          
+
           {error && (
             <div className="mb-4 bg-red-50 border-l-4 border-red-500 p-4 flex items-center gap-3">
               <AlertCircle className="text-red-500 w-5 h-5" />
@@ -88,8 +97,8 @@ export const Login: React.FC = () => {
               type="submit"
               disabled={isSubmitting}
               className={`w-full py-3 px-4 rounded-lg text-white font-medium shadow-lg transition-all
-                ${isSubmitting 
-                  ? 'bg-red-400 cursor-not-allowed' 
+                ${isSubmitting
+                  ? 'bg-red-400 cursor-not-allowed'
                   : 'bg-mmdu-red hover:bg-mmdu-dark hover:shadow-xl active:transform active:scale-95'
                 }`}
             >
