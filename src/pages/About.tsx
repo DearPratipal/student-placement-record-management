@@ -5,6 +5,7 @@ import { ArrowLeft } from "lucide-react";
 import {
     Mail,
     Phone,
+    Github,
     Linkedin,
     ChevronDown,
     ChevronUp,
@@ -102,7 +103,8 @@ export const About: React.FC = () => {
                     <ProfileCard
                         image="/developer.png"
                         name="Pratipal Kumar Singh"
-                        role="Developer – BCA"
+                        education="BCA (Bachelor of Computer Applications)"
+                        role="Developer – Full Stack Engineer – BCA"
                         description="Responsible for system architecture, UI/UX design, role-based structure, and full-stack implementation."
                         email="kumarpratipal123@gmail.com"
                         linkedIn="https://www.linkedin.com/in/dearpratipal/"
@@ -113,10 +115,11 @@ export const About: React.FC = () => {
                     <ProfileCard
                         image="/supervisor.png"
                         name="Dr. Dalip Kamboj"
+                        education="Ph.D. (IT), M.Tech. (IT) – Gold Medalist, MCA"
                         role="Project Supervisor – Associate Professor"
                         description="Provided academic guidance, technical supervision, and ensured adherence to software engineering standards."
                         email="dalip.kamboj@mmumullana.org"
-                        linkedin="https://www.linkedin.com/in/dalipkamboj/"
+                        linkedIn="https://www.linkedin.com/in/dalipkamboj/"
                         phone="+91-9996000940"
                     />
 
@@ -148,9 +151,11 @@ export const About: React.FC = () => {
 const ProfileCard = ({
     image,
     name,
+    education,
     role,
     description,
     email,
+    linkedIn,
     phone,
 }: any) => {
     return (
@@ -164,6 +169,7 @@ const ProfileCard = ({
                 />
                 <div>
                     <h3 className="text-lg font-semibold text-gray-800">{name}</h3>
+                    <p className="text-sm text-mmdu-blue font-medium">{education}</p>
                     <p className="text-sm text-mmdu-red font-medium">{role}</p>
                 </div>
             </div>
@@ -181,6 +187,19 @@ const ProfileCard = ({
                     <Mail size={16} />
                     Email
                 </a>
+
+                {/* LinkedIn Button */}
+                {linkedIn && (
+                    <a
+                        href={linkedIn.startsWith("http") ? linkedIn : `https://${linkedIn}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 px-4 py-2 bg-sky-50 text-sky-600 rounded-lg text-sm font-medium hover:bg-sky-100 transition-all duration-200 active:scale-95"
+                    >
+                        <linkedIn size={16} />
+                        LinkedIn
+                    </a>
+                )}
                 
                 <a
                     href={`tel:${phone}`}
