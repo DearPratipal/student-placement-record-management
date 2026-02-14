@@ -11,7 +11,21 @@ router.post(
     '/',
     protect,
     authorizeRoles('ADMIN', 'TNP_OFFICER'),
-    addDrive
+    getDrives
 );
 
+router.post(
+    '/',
+    protect,
+    authorizeRoles('ADMIN', 'TNP_OFFICER'),
+    addDrive
+);
+/*
+router.delete(
+    '/:id',
+    protect,
+    authorizeRoles('ADMIN'),
+    deleteDrive
+);
+*/
 export default router;

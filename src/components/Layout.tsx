@@ -48,6 +48,14 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
             </button>
             <div className="flex items-center gap-2 text-mmdu-red font-bold text-xl tracking-tight">
               <GraduationCap size={28} />
+              {/*
+              <img
+                src="/home-logo-mmdu.png"
+                // src="/logo-mmdu.svg"
+                alt="MMDU Logo"
+                className="w-20 h-30 object-contain"
+              />
+              */}
               <span className="hidden sm:inline">MM(DU) Placement Portal</span>
               <span className="sm:hidden">MM(DU)</span>
             </div>

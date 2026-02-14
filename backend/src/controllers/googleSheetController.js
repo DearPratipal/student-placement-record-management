@@ -1,3 +1,5 @@
+// Old Logic
+/*
 import Student from '../models/Student.js';
 import { parse } from 'csv-parse/sync';
 
@@ -36,6 +38,62 @@ export const importFromGoogleSheet = async (req, res) => {
             message: 'Students imported from Google Sheet successfully',
             count: students.length,
         });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: error.message });
+    }
+};*/
+
+import fetch from 'node-fetch';
+import { parse } from 'csv-parse/sync';
+import Student from '../models/Student.js';
+
+export const importFromGoogleSheet = async (req, res) => {
+    try {
+        const { url } = req.body;
+
+        if (!url) {
+            return res.status(400).json({ message: 'Sheet URL required' });
+        }
+
+        // Extract Sheet ID
+        const match = url.match(/\/d\/([a-zA-Z0-9-_]+)/);
+        if (!match) {
+            // return res.status(400).json({ message: 'Invalid Google Sheet URL' });
+            return res.status(400).json({ message: 'Google Sheet import currently unavailable. Please use Excel upload.' });
+        }
+
+        const sheetId = match[1];
+
+        // Force correct CSV export URL
+        const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv`;
+
+        const response = await fetch(csvUrl);
+        const csvText = await response.text();
+
+        // 🚨 Important check
+        if (csvText.startsWith('<!DOCTYPE')) {
+            return res.status(400).json({
+                message: 'Sheet is not public. Make it public: Anyone with link → Viewer'
+            });
+        }
+
+        const records = parse(csvText, {
+            columns: true,
+            skip_empty_lines: true,
+        });
+
+        if (!records.length) {
+            return res.status(400).json({ message: 'No data found in sheet' });
+        }
+
+        await Student.insertMany(records);
+
+        res.json({
+            message: 'Google Sheet imported successfully',
+            count: records.length,
+        });
+
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: error.message });

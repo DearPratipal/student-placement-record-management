@@ -19,8 +19,8 @@ const userSchema = new mongoose.Schema(
         },
         role: {
             type: String,
-            enum: ['ADMIN', 'TNP_HEAD', 'TNP_OFFICER', 'COORDINATOR'],
-            default: 'COORDINATOR',
+            enum: ['ADMIN', 'TNP_HEAD', 'TNP_OFFICER', 'COORDINATOR', 'STUDENT'],
+            default: 'STUDENT',
         },
         department: {
             type: String,

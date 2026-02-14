@@ -124,7 +124,7 @@ export const apiService = {
 
         return res.json(); // { message, count }
     },
-
+/*
     importFromGoogleSheet: async (sheetUrl: string) => {
         const res = await fetch(
             `${import.meta.env.VITE_API_BASE_URL}/api/import/google-sheet/students`,
@@ -141,6 +141,41 @@ export const apiService = {
         }
 
         return res.json(); // { message, count }
+    },*/
+    importFromGoogleSheet: async (sheetUrl: string) => {
+
+        // 1️⃣ Extract sheet ID
+        const match = sheetUrl.match(/\/d\/([a-zA-Z0-9-_]+)/);
+        if (!match) throw new Error("Invalid Google Sheet URL");
+
+        const sheetId = match[1];
+
+        const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv`;
+
+        // 2️⃣ Fetch CSV in browser (Google allows this)
+        const csvResponse = await fetch(csvUrl);
+        const csvText = await csvResponse.text();
+
+        if (csvText.startsWith('<!DOCTYPE')) {
+            throw new Error("Sheet is not public. Make it public → Anyone with link (Viewer)");
+        }
+
+        // 3️⃣ Send CSV text to backend
+        const res = await fetch(`${BASE_URL}/api/import/google-sheet/students`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                ...authHeader(),
+            },
+            body: JSON.stringify({ csvText }),
+        });
+
+        if (!res.ok) {
+            const err = await res.json();
+            throw new Error(err.message || 'Google Sheet import failed');
+        }
+
+        return res.json();
     },
 };
 

@@ -7,6 +7,7 @@ import studentRoutes from './routes/studentRoutes.js';
 import driveRoutes from './routes/driveRoutes.js';
 import excelRoutes from './routes/excelRoutes.js';
 import googleSheetRoutes from './routes/googleSheetRoutes.js';
+import importRoutes from './routes/import.routes.js';
 
 dotenv.config();
 
@@ -23,6 +24,8 @@ app.use('/api/students', studentRoutes);
 app.use('/api/drives', driveRoutes);
 app.use('/api/import', excelRoutes);
 app.use('/api/import/google-sheet', googleSheetRoutes);
+app.use('/api/import', importRoutes);
+app.use('/api/import', googleSheetRoutes);
 
 app.get('/', (req, res) => {
     res.send('Backend is running successfully 🚀');
