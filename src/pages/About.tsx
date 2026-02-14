@@ -119,7 +119,7 @@ export const About: React.FC = () => {
                         role="Project Supervisor – Associate Professor"
                         description="Provided academic guidance, technical supervision, and ensured adherence to software engineering standards."
                         email="dalip.kamboj@mmumullana.org"
-                        linkedIn="https://www.linkedin.com/in/dalipkamboj/"
+                        linkedIn="https://www.linkedin.com/in/dr-dalip-kamboj-62581a173/"
                         phone="+91-9996000940"
                     />
 
