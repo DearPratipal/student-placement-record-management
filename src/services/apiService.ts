@@ -219,7 +219,7 @@ export const apiService = {
     },
 
     // Admin actions for queries
-    /*
+    // /*
     updateQueryStatus: async (id: string, status: string) => {
         const res = await fetch(`${BASE_URL}/api/queries/${id}`, {
             method: "PUT",
@@ -253,7 +253,7 @@ export const apiService = {
 
         return res.json();
     },
-    */
+    // */
 
 };
 

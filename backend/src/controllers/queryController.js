@@ -17,12 +17,19 @@ export const createQuery = async (req, res) => {
         try {
             // 2️⃣ Try sending email (but don't crash API)
             const transporter = nodemailer.createTransport({
+                host: "smtp.gmail.com",
+                port: 587,
+                secure: true, // true for 465
+
                 service: "gmail",
                 auth: {
                     user: process.env.ADMIN_EMAIL,
                     pass: process.env.ADMIN_EMAIL_PASSWORD,
                 },
             });
+
+            await transporter.verify();
+            console.log("SMTP Ready");
 
             await transporter.sendMail({
                 from: `"MM(DU) Placement Cell" <${process.env.ADMIN_EMAIL}>`,
@@ -108,7 +115,7 @@ export const createQuery = async (req, res) => {
     }
 };
 
-/*
+// /*
 // Update Query Status (ADMIN)
 export const updateQueryStatus = async (req, res) => {
     try {
@@ -128,12 +135,19 @@ export const updateQueryStatus = async (req, res) => {
         if (status === "RESOLVED") {
 
             const transporter = nodemailer.createTransport({
+                host: "smtp.gmail.com",
+                port: 587,
+                secure: true, // true for 465
+
                 service: "gmail",
                 auth: {
                     user: process.env.ADMIN_EMAIL,
                     pass: process.env.ADMIN_EMAIL_PASSWORD,
                 },
             });
+
+            await transporter.verify();
+            console.log("SMTP Ready");
 
             await transporter.sendMail({
                 from: `"MM(DU) Placement Cell" <${process.env.ADMIN_EMAIL}>`,
@@ -168,7 +182,7 @@ export const updateQueryStatus = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
-*/
+// */
 
 /*
 export const createQuery = async (req, res) => {
@@ -212,7 +226,7 @@ export const createQuery = async (req, res) => {
     }
 };
 */
-/*
+// /*
 export const deleteQuery = async (req, res) => {
     try {
         const { id } = req.params;
@@ -225,7 +239,7 @@ export const deleteQuery = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
-*/
+// */
 
 // Get All Queries (Admin Only)
 export const getQueries = async (req, res) => {

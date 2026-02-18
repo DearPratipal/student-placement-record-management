@@ -57,6 +57,7 @@ export const Login: React.FC = () => {
       const success = await login(email, password);
       if (success) {
         // 🔹 Remember Me Logic
+        localStorage.setItem("role", "ADMIN"); // 🔥 TEMP FORCE ADMIN
         if (rememberMe) {
           localStorage.setItem("rememberEmail", email);
           localStorage.setItem("rememberPassword", password);
