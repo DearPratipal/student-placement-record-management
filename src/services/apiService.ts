@@ -5,6 +5,8 @@ import { Drive } from "../types/drive";
 */
 // src/services/apiService.ts
 
+// import { createQuery } from "@/backend/src/controllers/queryController";
+
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 /**
@@ -142,6 +144,7 @@ export const apiService = {
 
         return res.json(); // { message, count }
     },*/
+
     importFromGoogleSheet: async (sheetUrl: string) => {
 
         // 1️⃣ Extract sheet ID
@@ -177,6 +180,81 @@ export const apiService = {
 
         return res.json();
     },
+
+    // Submit Questies
+    submitQuery: async (data: any) => {
+    // createQuery: async (data: any) => {
+        const res = await fetch(`${BASE_URL}/api/queries`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data),
+        });
+
+        if (!res.ok) {
+            const err = await res.json();
+            throw new Error(err.message || "Query submission failed");
+        }
+
+        // if (!res.ok) throw new Error("Query submission failed");
+
+        return res.json();
+    },
+
+    getQueries: async () => {
+        const res = await fetch(`${BASE_URL}/api/queries`, {
+            headers: {
+                "Content-Type": "application/json",
+                ...authHeader(),
+            },
+        });
+
+        if (!res.ok) {
+            const err = await res.json();
+            throw new Error(err.message || "Failed to fetch queries");
+        }
+
+        // if (!res.ok) throw new Error("Failed to fetch queries");
+
+        return res.json();
+    },
+
+    // Admin actions for queries
+    /*
+    updateQueryStatus: async (id: string, status: string) => {
+        const res = await fetch(`${BASE_URL}/api/queries/${id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                ...authHeader(),
+            },
+            body: JSON.stringify({ status }),
+        });
+
+        if (!res.ok) {
+            const err = await res.json();
+            throw new Error(err.message);
+        }
+
+        return res.json();
+    },
+
+    deleteQuery: async (id: string) => {
+        const res = await fetch(`${BASE_URL}/api/queries/${id}`, {
+            method: "DELETE",
+            headers: {
+                ...authHeader(),
+            },
+        });
+
+        if (!res.ok) {
+            const err = await res.json();
+            throw new Error(err.message);
+        }
+
+        return res.json();
+    },
+    */
+
 };
 
 

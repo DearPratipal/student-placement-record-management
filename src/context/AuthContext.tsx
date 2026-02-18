@@ -55,6 +55,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setUser(null);
     localStorage.removeItem('mmdu_user');
     localStorage.removeItem('token');
+    localStorage.removeItem('role');
   };
 
   return (

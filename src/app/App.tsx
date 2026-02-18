@@ -7,6 +7,8 @@ import { Dashboard } from '../pages/Dashboard';
 import { Students } from '../pages/Students';
 import { Drives } from '../pages/Drives';
 import { About } from "../pages/About";
+import { ForgotPassword } from '../pages/ForgotPassword';
+
 
 
 // Protected Route Wrapper
@@ -23,6 +25,7 @@ const AppRoutes = () => {
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
+      <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route
         path="/"
         element={
