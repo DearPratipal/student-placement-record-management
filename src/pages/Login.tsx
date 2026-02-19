@@ -1,14 +1,15 @@
 // import React, { useState } from 'react';
 import React, { useState, useEffect } from 'react';
+import toast from "react-hot-toast";
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { apiService } from '../services/apiService';
-import { GraduationCap, Lock, Mail, AlertCircle, Eye, EyeOff} from 'lucide-react';
+import { GraduationCap, Lock, Mail, AlertCircle, Eye, EyeOff } from 'lucide-react';
 
 
 // Function to handle query submission
 export const Login: React.FC = () => {
-  const [email, setEmail] = useState(''); 
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
@@ -47,7 +48,7 @@ export const Login: React.FC = () => {
     }
   };
   */
- 
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
@@ -91,14 +92,16 @@ export const Login: React.FC = () => {
         message: queryMessage,
       });
 
-      alert("Request submitted successfully!");
+      // alert("Request submitted successfully!");
+      toast.success("Query submitted successfully 🎉");
       setShowQueryModal(false);
       setQueryName('');
       setQueryEmail('');
       setQueryRole('STUDENT');
       setQueryMessage('');
     } catch (error) {
-      alert("Something went wrong.");
+      // alert("Something went wrong.");
+      toast.error("Something went wrong. Please try again.");
     }
   };
 
@@ -110,6 +113,8 @@ export const Login: React.FC = () => {
         className="absolute inset-0 bg-cover bg-center"
         style={{
           backgroundImage: "url('/mmdu-college.jpg')",
+          backgroundPosition: "center",
+          backgroundSize: "cover",
         }}
       ></div>
 
@@ -135,7 +140,8 @@ export const Login: React.FC = () => {
 
           <div className="flex justify-center mb-4">
             <img
-              src="/mmdu-logo.png"
+              // src="/mmdu-logo.png"
+              src="/Logo-Color-MMDU.webp"
               // src="/mmdu-logo-black.png"
               // src="/mmdu-logo-white.png"
               // src="/mmdu-logo-red-white.png"
@@ -300,9 +306,9 @@ export const Login: React.FC = () => {
             </h2>
 
             <form onSubmit={handleQuerySubmit} className="space-y-4">
-            
-            
-            {/* <form
+
+
+              {/* <form
               onSubmit={async (e) => {
                 e.preventDefault();
 

@@ -6,7 +6,8 @@ export const ForgotPassword: React.FC = () => {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        alert("Password reset link sent (demo mode)");
+        // alert("Password reset link sent (demo mode)");
+        toast.success("Reset link sent to your email 📩");
     };
 
     return (

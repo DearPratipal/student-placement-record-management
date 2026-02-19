@@ -171,6 +171,13 @@ export const Dashboard: React.FC = () => {
           bg="bg-red-50"
           border="border-red-200"
         />
+        {/* <StatCard
+          title="Placed Students"
+          value={placedStudents}
+          icon={<AlertTriangle className="text-green-600" />}
+          bg="bg-green-50"
+          border="border-green-200"
+        /> */}
       </div>
 
       {/* CHARTS */}
