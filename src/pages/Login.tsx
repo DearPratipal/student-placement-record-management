@@ -1,6 +1,7 @@
 // import React, { useState } from 'react';
 import React, { useState, useEffect } from 'react';
 import toast from "react-hot-toast";
+import { motion, AnimatePresence } from "framer-motion";
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { apiService } from '../services/apiService';
@@ -20,6 +21,9 @@ export const Login: React.FC = () => {
   const [queryEmail, setQueryEmail] = useState('');
   const [queryRole, setQueryRole] = useState('STUDENT');
   const [queryMessage, setQueryMessage] = useState('');
+
+  // Forget Password State
+  const [isForgot, setIsForgot] = useState(false);
 
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -105,6 +109,25 @@ export const Login: React.FC = () => {
     }
   };
 
+  // Effect to Login Page if "Forgot Password" is clicked
+  const panelVariants = {
+    initial: {
+      opacity: 0,
+      y: 30,
+      filter: "blur(10px)"
+    },
+    animate: {
+      opacity: 1,
+      y: 0,
+      filter: "blur(0px)"
+    },
+    exit: {
+      opacity: 0,
+      y: -30,
+      filter: "blur(10px)"
+    }
+  };
+
   return (
     <div className="relative min-h-screen flex items-center justify-center">
 
@@ -160,117 +183,137 @@ export const Login: React.FC = () => {
 
         {/* Form Section */}
         <div className="p-8">
-          <h3 className="text-xl font-semibold text-gray-800 mb-6 text-center">
+          
+          {/* <h3 className="text-xl font-semibold text-gray-800 mb-6 text-center">
             Secure Login
-          </h3>
+          </h3> */}
 
-          {error && (
-            <div className="mb-4 bg-red-50 border-l-4 border-red-500 p-4 flex items-center gap-3">
-              <AlertCircle className="text-red-500 w-5 h-5" />
-              <p className="text-sm text-red-700">{error}</p>
-            </div>
-          )}
+          <AnimatePresence mode="wait">
 
-          <form onSubmit={handleSubmit} className="space-y-6">
-
-            {/* Email */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Email Address
-              </label>
-              <div className="relative">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
-                <input
-                  type="email"
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all outline-none"
-                  placeholder="username@mmumullana.org"
-                />
-              </div>
-            </div>
-
-            {/* Password */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Password
-              </label>
-              {/*}
-              <div className="relative">
-                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
-                <input
-                  type="password"
-                  required
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all outline-none"
-                  placeholder="••••••••"
-                />
-              </div>
-              */}
-              <div className="relative">
-                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
-
-                <input
-                  type={showPassword ? "text" : "password"}
-                  required
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all outline-none"
-                  placeholder="••••••••"
-                />
-
-                {/* 👁 Eye Button */}
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-mmdu-red transition"
-                >
-                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-                </button>
-              </div>
-            </div>
-
-            {/* Remember + Forgot */}
-            <div className="flex items-center justify-between text-sm">
-
-              {/* Remember Me */}
-              <label className="flex items-center gap-2 cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={rememberMe}
-                  onChange={(e) => setRememberMe(e.target.checked)}
-                  className="accent-red-600 w-4 h-4"
-                />
-                <span className="text-gray-600">Remember Me</span>
-              </label>
-
-              {/* Forgot Password */}
-              <button
-                type="button"
-                onClick={() => navigate("/forgot-password")}
-                className="text-mmdu-red hover:underline font-medium"
+            {!isForgot ? (
+              <motion.div
+                key="login"
+                variants={panelVariants}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                transition={{ duration: 0.6, ease: "easeInOut" }}
               >
-                Forgot Password?
-              </button>
 
-            </div>
+                <h3 className="text-xl font-semibold text-gray-800 mb-6 text-center">
+                  Secure Login
+                </h3>
 
-            {/* Button */}
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className={`w-full py-3 px-4 rounded-lg text-white font-medium shadow-lg transition-all
-              ${isSubmitting
-                  ? 'bg-red-400 cursor-not-allowed'
-                  : 'bg-mmdu-red hover:bg-mmdu-dark hover:shadow-xl active:scale-95'
-                }`}
-            >
-              {isSubmitting ? 'Authenticating...' : 'Access Dashboard'}
-            </button>
+                <form onSubmit={handleSubmit} className="space-y-6">
 
-          </form>
+                  {/* Email */}
+                  <div className="relative">
+                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
+                    <input
+                      type="email"
+                      required
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-red-500"
+                      placeholder="username@mmumullana.org"
+                    />
+                  </div>
+
+                  {/* Password */}
+                  <div className="relative">
+                    <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      required
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      className="w-full pl-10 pr-12 py-3 border rounded-lg focus:ring-2 focus:ring-red-500"
+                      placeholder="••••••••"
+                    />
+                  </div>
+
+                  {/* Remember + Forgot */}
+                  <div className="flex justify-between text-sm">
+                    <label className="flex items-center gap-2">
+                      <input
+                        type="checkbox"
+                        checked={rememberMe}
+                        onChange={(e) => setRememberMe(e.target.checked)}
+                      />
+                      Remember Me
+                    </label>
+
+                    <button
+                      type="button"
+                      onClick={() => setIsForgot(true)}
+                      className="text-mmdu-red hover:underline"
+                    >
+                      Forgot Password?
+                    </button>
+                  </div>
+
+                  <button
+                    type="submit"
+                    className="w-full bg-mmdu-red text-white py-3 rounded-lg"
+                  >
+                    Access Dashboard
+                  </button>
+
+                </form>
+
+              </motion.div>
+            ) : (
+
+              <motion.div
+                key="forgot"
+                variants={panelVariants}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                transition={{ duration: 0.6, ease: "easeInOut" }}
+              >
+
+                <h3 className="text-xl font-semibold text-gray-800 mb-6 text-center">
+                  Forgot Password
+                </h3>
+
+                <form onSubmit={(e) => e.preventDefault()} className="space-y-6">
+
+                  <div className="relative">
+                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
+                    <input
+                      type="email"
+                      required
+                      placeholder="Enter your registered email"
+                      className="w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-red-500"
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    className="w-full bg-mmdu-red text-white py-3 rounded-lg"
+                  >
+                    Reset Password
+                  </button>
+
+                </form>
+
+                <div className="mt-6 text-center text-sm">
+                  <button
+                    onClick={() => setIsForgot(false)}
+                    className="text-mmdu-red hover:underline"
+                  >
+                    Remember your password? Login here
+                  </button>
+                </div>
+
+              </motion.div>
+            )}
+
+          </AnimatePresence>
+
+
+          {/* Missing Provisous -  */}
 
           <div className="mt-6 text-center text-sm text-gray-600">
             Need access?{" "}
