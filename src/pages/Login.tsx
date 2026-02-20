@@ -299,11 +299,12 @@ export const Login: React.FC = () => {
                 </form>
 
                 <div className="mt-6 text-center text-sm">
+                  Remember your password? &nbsp;
                   <button
                     onClick={() => setIsForgot(false)}
                     className="text-mmdu-red hover:underline"
                   >
-                    Remember your password? Login here
+                  <b>Login here</b>
                   </button>
                 </div>
 

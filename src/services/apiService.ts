@@ -253,6 +253,27 @@ export const apiService = {
 
         return res.json();
     },
+
+    // ---------------- AUTH ----------------//
+    forgotPassword: async (email: string) => {
+        const res = await fetch(`${BASE_URL}/api/auth/forgot-password`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email }),
+        });
+
+        return res.json();
+    },
+
+    resetPassword: async (token: string, password: string) => {
+        const res = await fetch(`${BASE_URL}/api/auth/reset-password/${token}`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ password }),
+        });
+
+        return res.json();
+    },
     // */
 
 };

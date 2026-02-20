@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+// import crypto from "crypto";
 
 const userSchema = new mongoose.Schema(
     {
@@ -24,6 +25,17 @@ const userSchema = new mongoose.Schema(
         },
         department: {
             type: String,
+        },
+        resetPasswordToken: {
+            type: String,
+        },    
+        resetPasswordExpires: {
+            type: Date,
+        },
+        status: {
+            type: String,
+            enum: ['ACTIVE', 'INACTIVE'],
+            default: 'ACTIVE',
         },
     },
     { timestamps: true }
