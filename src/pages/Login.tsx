@@ -239,38 +239,55 @@ export const Login: React.FC = () => {
                       className="w-full pl-10 pr-12 py-3 border rounded-lg focus:ring-2 focus:ring-red-500"
                       placeholder="••••••••"
                     />
+
+                    {/* 👁 Eye Button */}
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-mmdu-red transition"
+                    >
+                      {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                    </button>
                   </div>
                   </div>
 
                   {/* Remember + Forgot */}
-                  <div className="flex justify-between text-sm">
-                    <label className="flex items-center gap-2">
+                  <div className="flex items-center justify-between text-sm">
+
+                    {/* Remember Me */}
+                    <label className="flex items-center gap-2 cursor-pointer">
                       <input
                         type="checkbox"
                         checked={rememberMe}
                         onChange={(e) => setRememberMe(e.target.checked)}
+                        className="accent-red-600 w-4 h-4"
                       />
-                      Remember Me
+                      <span className="text-gray-600">Remember Me</span>
                     </label>
 
+                    {/* Forgot Password */}
                     <button
                       type="button"
                       onClick={() => setIsForgot(true)}
-                      className="text-mmdu-red hover:underline"
+                      className="text-mmdu-red hover:underline font-medium"
                     >
                       Forgot Password?
                     </button>
                   </div>
 
+                  {/* Button */}
                   <button
                     type="submit"
-                    className="w-full bg-mmdu-red text-white py-3 rounded-lg"
+                    disabled={isSubmitting}
+                    className={`w-full py-3 px-4 rounded-lg text-white font-medium shadow-lg transition-all
+              ${isSubmitting
+                        ? 'bg-red-400 cursor-not-allowed'
+                        : 'bg-mmdu-red hover:bg-mmdu-dark hover:shadow-xl active:scale-95'
+                      }`}
                   >
-                    Access Dashboard
+                    {isSubmitting ? 'Authenticating...' : 'Access Dashboard'}
                   </button>
-
                 </form>
-
               </motion.div>
             ) : (
 
@@ -414,8 +431,10 @@ export const Login: React.FC = () => {
                 className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-red-500 outline-none"
               >
                 <option value="STUDENT">Student</option>
+                <option value="Placement Cell Head">Placement Cell Head</option>
+                <option value="Placement Officer">Placement Officer</option>
                 <option value="FACULTY">Faculty</option>
-                <option value="ADMIN">TNP Mentor</option>
+                <option value="TNP_Mentor">TNP Mentor</option>
                 <option value="COORDINATOR">Coordinator</option>
                 <option value="TNP_OFFICER">TNP Officer</option>
               </select>
