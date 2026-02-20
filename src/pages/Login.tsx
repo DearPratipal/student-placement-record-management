@@ -207,6 +207,10 @@ export const Login: React.FC = () => {
                 <form onSubmit={handleSubmit} className="space-y-6">
 
                   {/* Email */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Email Address
+                    </label>
                   <div className="relative">
                     <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
                     <input
@@ -218,8 +222,13 @@ export const Login: React.FC = () => {
                       placeholder="username@mmumullana.org"
                     />
                   </div>
+                  </div>
 
                   {/* Password */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Password
+                    </label>
                   <div className="relative">
                     <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
                     <input
@@ -230,6 +239,7 @@ export const Login: React.FC = () => {
                       className="w-full pl-10 pr-12 py-3 border rounded-lg focus:ring-2 focus:ring-red-500"
                       placeholder="••••••••"
                     />
+                  </div>
                   </div>
 
                   {/* Remember + Forgot */}
